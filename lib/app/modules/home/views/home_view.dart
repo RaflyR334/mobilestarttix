@@ -10,6 +10,7 @@ class HomeView extends GetView<HomeController> {  // Deklarasi class HomeView de
   
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Get.put(HomeController());
     return Scaffold(
       backgroundColor: HexColor('#feeee8'),
       body: Center(
@@ -25,7 +26,7 @@ class HomeView extends GetView<HomeController> {  // Deklarasi class HomeView de
               height: 15,
             ),
             Text(
-              'Aplikasi Portal Berita Indonesia',
+              'Aplikasi Katalog Film, StartTix',
               style: GoogleFonts.roboto(
                 textStyle: const TextStyle(
                   fontWeight: FontWeight.bold,

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:lottie/lottie.dart';
-import 'package:ujikom/app/modules/register/views/register_view.dart';
 
+import '../../register/views/register_view.dart' show RegisterView;
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
@@ -20,7 +20,7 @@ class LoginView extends GetView<LoginController> {
             Padding(
               padding: const EdgeInsets.only(top: 70.0),
               child: Lottie.network(
-                'https://gist.githubusercontent.com/olipiskandar/2095343e6b34255dcfb042166c4a3283/raw/d76e1121a2124640481edcf6e7712130304d6236/praujikom_kucing.json',
+              'https://gist.githubusercontent.com/olipiskandar/2095343e6b34255dcfb042166c4a3283/raw/d76e1121a2124640481edcf6e7712130304d6236/praujikom_kucing.json',
                 fit: BoxFit.cover,
               ),
             ),
@@ -52,9 +52,7 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Container(
               height: 50,
               width: 250,
@@ -68,16 +66,11 @@ class LoginView extends GetView<LoginController> {
                 },
                 child: const Text(
                   'Login',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Container(
               height: 50,
               width: 250,
@@ -91,10 +84,7 @@ class LoginView extends GetView<LoginController> {
                 },
                 child: const Text(
                   'Register',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
               ),
             ),

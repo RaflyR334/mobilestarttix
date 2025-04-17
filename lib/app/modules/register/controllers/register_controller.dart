@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import 'package:ujikom/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:ujikom/app/utils/api.dart';
 
 class RegisterController extends GetxController {
-  final _getConnect = GetConnect();
-
   // Controller untuk input field
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -20,27 +21,49 @@ class RegisterController extends GetxController {
     // Validasi input
     if (!_validasiRegister()) return;
 
-    final response = await _getConnect.post(BaseUrl.register, {
-      'name': nameController.text,
-      'email': emailController.text,
-      'tanggal_lahir': tanggalLahirController.text,
-      'password': passwordController.text,
-      'password_confirmation': passwordConfirmationController.text,
-    });
-
-    if (response.statusCode == 200) {
-      authToken.write('acces_token', response.body['acces_token']);
-      Get.offAll(() => const DashboardView());
-    } else {
-      Get.snackbar(
-        'Error',
-        response.body['error'].toString(),
-        icon: const Icon(Icons.error),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        forwardAnimationCurve: Curves.bounceIn,
-        margin: const EdgeInsets.only(top: 10, left: 5, right: 5),
+    try {
+      final response = await http.post(
+        Uri.parse(BaseUrl.register),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'name': nameController.text,
+          'email': emailController.text,
+          'tanggal_lahir': tanggalLahirController.text,
+          'password': passwordController.text,
+          'password_confirmation': passwordConfirmationController.text,
+        }),
       );
+
+      print("📥 Status code: ${response.statusCode}");
+      print("📥 Response body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        authToken.write('access_token', responseData['access_token']);
+        print("✅ Token disimpan: ${authToken.read('access_token')}");
+        Get.offAll(() => const DashboardView());
+      } else {
+        final responseData = jsonDecode(response.body);
+        Get.snackbar(
+          'Error',
+          responseData['error'].toString(),
+          icon: const Icon(Icons.error),
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          margin: const EdgeInsets.all(10),
+        );
+        print("❌ Register gagal: ${responseData['error']}");
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Terjadi Kesalahan',
+        'Tidak bisa terhubung ke server.',
+        icon: const Icon(Icons.error_outline),
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        margin: const EdgeInsets.all(10),
+      );
+      print("❌ Exception: $e");
     }
   }
 
