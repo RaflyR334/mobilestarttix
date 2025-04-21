@@ -9,7 +9,6 @@ import '../../login/views/login_view.dart';
 class HomeController extends GetxController {
   late Timer _pindah;
   final authToken = GetStorage();
-  //TODO: Implement HomeController
 
   @override
   void onInit() {

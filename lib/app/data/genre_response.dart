@@ -1,7 +1,7 @@
 class GenreResponse {
   bool? success;
   String? message;
-  List<Data>? data;
+  List<Genre>? data;
 
   GenreResponse({this.success, this.message, this.data});
 
@@ -9,9 +9,9 @@ class GenreResponse {
     success = json['success'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Genre>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new Genre.fromJson(v));
       });
     }
   }
@@ -27,16 +27,16 @@ class GenreResponse {
   }
 }
 
-class Data {
+class Genre {
   int? id;
   String? namaGenre;
   String? slug;
   String? createdAt;
   String? updatedAt;
 
-  Data({this.id, this.namaGenre, this.slug, this.createdAt, this.updatedAt});
+  Genre({this.id, this.namaGenre, this.slug, this.createdAt, this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Genre.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     namaGenre = json['nama_genre'];
     slug = json['slug'];
